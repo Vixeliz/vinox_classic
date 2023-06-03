@@ -7,3 +7,4 @@ default-run = "viassic_client"
 [dependencies]
 bevy.workspace=true
 vinox_voxel.workspace = true
+viassic_common = {path = "../viassic_common"}

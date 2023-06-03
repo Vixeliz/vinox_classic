@@ -3357,12 +3357,19 @@ name = "viassic_client"
 version = "0.1.0"
 dependencies = [
  "bevy",
+ "viassic_common",
  "vinox_voxel",
 ]
 
 [[package]]
 name = "viassic_common"
 version = "0.1.0"
+dependencies = [
+ "ahash 0.8.3",
+ "bevy",
+ "strum",
+ "vinox_voxel",
+]
 
 [[package]]
 name = "viassic_server"
