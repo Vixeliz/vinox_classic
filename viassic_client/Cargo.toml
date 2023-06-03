@@ -1,0 +1,9 @@
+[package]
+name = "viassic_client"
+version = "0.1.0"
+edition = "2021"
+default-run = "viassic_client"
+
+[dependencies]
+bevy.workspace=true
+vinox_voxel.workspace = true

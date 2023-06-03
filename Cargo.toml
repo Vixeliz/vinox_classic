@@ -1,0 +1,22 @@
+[workspace]
+members = [
+  "viassic_client",
+  "viassic_server",
+  "viassic_common"
+]
+resolver = "2"
+
+[workspace.dependencies]
+vinox_voxel = {git="https://github.com/vixeliz/vinox_voxel.git"}
+bevy = "0.10.1"
+
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
+
+[profile.release]
+opt-level = 3
+lto = true #Change this to be per platform windows doesn't seem to like it
+
