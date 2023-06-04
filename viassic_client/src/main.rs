@@ -3,6 +3,7 @@ use bevy::asset::LoadState;
 use bevy::prelude::*;
 use bevy::render::mesh::Indices;
 use bevy::render::render_resource::PrimitiveTopology;
+use bevy_flycam::PlayerPlugin;
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 use viassic_common::blocks::blocks::Clube;
 use viassic_common::blocks::blocks::ClubeRegistry;
@@ -26,6 +27,7 @@ fn main() {
     let mut app = App::new();
     app.add_state::<GameState>();
     app.add_plugins(DefaultPlugins.set(ImagePlugin::default_nearest()).build());
+    app.add_plugin(PlayerPlugin);
     app.add_plugin(WorldInspectorPlugin::new());
     app.insert_resource(ClubeHandles::default());
     app.insert_resource(Msaa::Off);
@@ -68,9 +70,17 @@ pub fn game_setup(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
-    commands.spawn(Camera3dBundle::default());
+    // commands.spawn(Camera3dBundle::default());
 
     let mut chunk = ChunkData::<Clube, ClubeRegistry>::default();
+    chunk.set(
+        RelativeVoxelPos::new(8, 4, 8),
+        Clube {
+            identifier: viassic_common::blocks::blocks::ClubeType::Grass,
+            geometry: BlockGeometry::Block,
+            visibility: VoxelVisibility::Opaque,
+        },
+    );
     for y in 0..2 {
         for x in 0..CHUNK_SIZE {
             for z in 0..CHUNK_SIZE {
@@ -79,8 +89,7 @@ pub fn game_setup(
                         chunk.set(
                             RelativeVoxelPos::new(x as u32, y + 1, z as u32),
                             Clube {
-                                identifier: viassic_common::blocks::blocks::ClubeType::Dirt,
-                                texture: 1,
+                                identifier: viassic_common::blocks::blocks::ClubeType::Grass,
                                 geometry: BlockGeometry::Block,
                                 visibility: VoxelVisibility::Opaque,
                             },
@@ -91,7 +100,6 @@ pub fn game_setup(
                             RelativeVoxelPos::new(x as u32, y + 1, z as u32),
                             Clube {
                                 identifier: viassic_common::blocks::blocks::ClubeType::Dirt,
-                                texture: 1,
                                 geometry: BlockGeometry::Block,
                                 visibility: VoxelVisibility::Opaque,
                             },
@@ -102,8 +110,7 @@ pub fn game_setup(
                 chunk.set(
                     RelativeVoxelPos::new(x as u32, y + 1, z as u32),
                     Clube {
-                        identifier: viassic_common::blocks::blocks::ClubeType::Dirt,
-                        texture: 1,
+                        identifier: viassic_common::blocks::blocks::ClubeType::Stone,
                         geometry: BlockGeometry::Block,
                         visibility: VoxelVisibility::Opaque,
                     },

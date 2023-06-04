@@ -17,7 +17,6 @@ pub fn load_textures(asset_server: Res<AssetServer>, mut loading: ResMut<ClubeHa
         match name {
             ClubeType::Dirt => {
                 let handle: Handle<Image> = asset_server.load("textures/dirt.png");
-                // loading.push(handle.clone_untyped());
                 texture_array.insert(
                     name.to_string(),
                     [
@@ -34,16 +33,13 @@ pub fn load_textures(asset_server: Res<AssetServer>, mut loading: ResMut<ClubeHa
                 let handle: Handle<Image> = asset_server.load("textures/dirt.png");
                 let top_handle: Handle<Image> = asset_server.load("textures/grass.png");
                 let side_handle: Handle<Image> = asset_server.load("textures/grass_side.png");
-                // loading.push(handle.clone_untyped());
-                // loading.push(top_handle.clone_untyped());
-                // loading.push(side_handle.clone_untyped());
                 texture_array.insert(
                     name.to_string(),
                     [
-                        side_handle.clone(),
-                        side_handle.clone(),
-                        handle.clone(),
                         top_handle.clone(),
+                        handle.clone(),
+                        side_handle.clone(),
+                        side_handle.clone(),
                         side_handle.clone(),
                         side_handle.clone(),
                     ],
@@ -51,7 +47,6 @@ pub fn load_textures(asset_server: Res<AssetServer>, mut loading: ResMut<ClubeHa
             }
             ClubeType::Stone => {
                 let handle: Handle<Image> = asset_server.load("textures/stone.png");
-                // loading.push(handle.clone_untyped());
                 texture_array.insert(
                     name.to_string(),
                     [
@@ -66,7 +61,6 @@ pub fn load_textures(asset_server: Res<AssetServer>, mut loading: ResMut<ClubeHa
             }
             ClubeType::Wood => {
                 let handle: Handle<Image> = asset_server.load("textures/wood.png");
-                // loading.push(handle.clone_untyped());
                 texture_array.insert(
                     name.to_string(),
                     [

@@ -10,3 +10,4 @@ vinox_voxel.workspace = true
 viassic_common = {path = "../viassic_common"}
 bevy-inspector-egui = "0.18.3"
 ahash = "0.8.3"
+bevy_flycam = "0.10.1"

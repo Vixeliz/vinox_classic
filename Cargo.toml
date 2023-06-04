@@ -8,6 +8,7 @@ resolver = "2"
 
 [workspace.dependencies]
 vinox_voxel = {git="https://github.com/vixeliz/vinox_voxel.git"}
+# vinox_voxel = {path="../vinox_voxel"}
 bevy = "0.10.1"
 
 [profile.dev]

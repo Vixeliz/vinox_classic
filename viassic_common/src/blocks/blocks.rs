@@ -15,7 +15,6 @@ pub enum ClubeType {
 #[derive(Clone, Eq, PartialEq, Serialize, Deserialize)]
 pub struct Clube {
     pub identifier: ClubeType,
-    pub texture: usize,
     pub geometry: BlockGeometry,
     pub visibility: VoxelVisibility,
 }
@@ -24,7 +23,6 @@ impl Default for Clube {
     fn default() -> Self {
         Self {
             identifier: ClubeType::Air,
-            texture: 0,
             geometry: BlockGeometry::Block,
             visibility: VoxelVisibility::Empty,
         }
