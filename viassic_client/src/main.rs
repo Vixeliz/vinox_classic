@@ -86,24 +86,41 @@ pub fn game_setup(
             for z in 0..CHUNK_SIZE {
                 if y == 1 {
                     if x == CHUNK_SIZE - 1 || z == CHUNK_SIZE - 1 || x == 0 || z == 0 {
-                        chunk.set(
-                            RelativeVoxelPos::new(x as u32, y + 1, z as u32),
-                            Clube {
-                                identifier: viassic_common::blocks::blocks::ClubeType::Grass,
-                                geometry: BlockGeometry::Block,
-                                visibility: VoxelVisibility::Opaque,
-                            },
-                        );
+                        // chunk.set(
+                        //     RelativeVoxelPos::new(x as u32, y + 1, z as u32),
+                        //     Clube {
+                        //         identifier: viassic_common::blocks::blocks::ClubeType::Grass,
+                        //         geometry: BlockGeometry::Block,
+                        //         visibility: VoxelVisibility::Opaque,
+                        //     },
+                        // );
                         continue;
                     } else {
-                        chunk.set(
-                            RelativeVoxelPos::new(x as u32, y + 1, z as u32),
-                            Clube {
-                                identifier: viassic_common::blocks::blocks::ClubeType::Dirt,
-                                geometry: BlockGeometry::Block,
-                                visibility: VoxelVisibility::Opaque,
-                            },
-                        );
+                        if (x % 2) == 1 {
+                            if (z % 2) == 1 {
+                                chunk.set(
+                                    RelativeVoxelPos::new(x as u32, y + 1, z as u32),
+                                    Clube {
+                                        identifier:
+                                            viassic_common::blocks::blocks::ClubeType::Grass,
+                                        geometry: BlockGeometry::Block,
+                                        visibility: VoxelVisibility::Opaque,
+                                    },
+                                );
+                            }
+                        } else {
+                            if (z % 2) == 0 {
+                                chunk.set(
+                                    RelativeVoxelPos::new(x as u32, y + 1, z as u32),
+                                    Clube {
+                                        identifier:
+                                            viassic_common::blocks::blocks::ClubeType::Grass,
+                                        geometry: BlockGeometry::Block,
+                                        visibility: VoxelVisibility::Opaque,
+                                    },
+                                );
+                            }
+                        }
                         continue;
                     }
                 }
