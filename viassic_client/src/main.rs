@@ -1,17 +1,29 @@
 use bevy::asset::LoadState;
 use bevy::prelude::*;
+use bevy_inspector_egui::quick::WorldInspectorPlugin;
 use viassic_common::blocks::registry::load_textures;
 use viassic_common::blocks::registry::ClubeAssetRegistry;
 use viassic_common::blocks::registry::ClubeHandles;
 use vinox_voxel::prelude::AssetRegistry;
 
+#[derive(Default, States, Debug, Hash, PartialEq, Eq, Clone)]
+pub enum GameState {
+    #[default]
+    Loading,
+    Menu,
+    Game,
+}
+
 fn main() {
     // Create the app
     let mut app = App::new();
+    app.add_state::<GameState>();
     app.add_plugins(DefaultPlugins);
+    app.add_plugin(WorldInspectorPlugin::new());
     app.insert_resource(ClubeHandles::default());
-    app.add_startup_system(load_textures);
-    app.add_system(create_registry);
+    app.add_system(load_textures.in_schedule(OnEnter(GameState::Loading)));
+    app.add_system(game_setup.in_schedule(OnEnter(GameState::Game)));
+    app.add_system(create_registry.in_set(OnUpdate(GameState::Loading)));
     app.run();
 }
 
@@ -36,6 +48,12 @@ pub fn create_registry(
             clube_handles.clone(),
         )));
 
+        commands.insert_resource(NextState(Some(GameState::Game)));
+
         *completed = true;
     }
+}
+
+pub fn game_setup(mut commands: Commands) {
+    commands.spawn(Camera3dBundle::default());
 }

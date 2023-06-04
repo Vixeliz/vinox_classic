@@ -8,3 +8,4 @@ default-run = "viassic_client"
 bevy.workspace=true
 vinox_voxel.workspace = true
 viassic_common = {path = "../viassic_common"}
+bevy-inspector-egui = "0.18.3"

@@ -10,4 +10,5 @@ bevy.workspace=true
 strum = { version = "0.24.1", features = ["derive"] }
 vinox_voxel.workspace = true
 ahash = "0.8.3"
+serde = "1.0.163"
 

@@ -14,18 +14,21 @@ pub struct ClubeAssetRegistry(pub AssetRegistry);
 pub fn load_textures(asset_server: Res<AssetServer>, mut loading: ResMut<ClubeHandles>) {
     let mut texture_array = HashMap::new();
     for name in ClubeType::iter() {
-        let textures = match name {
+        match name {
             ClubeType::Dirt => {
                 let handle: Handle<Image> = asset_server.load("textures/dirt.png");
                 // loading.push(handle.clone_untyped());
-                [
-                    handle.clone(),
-                    handle.clone(),
-                    handle.clone(),
-                    handle.clone(),
-                    handle.clone(),
-                    handle.clone(),
-                ]
+                texture_array.insert(
+                    name.to_string(),
+                    [
+                        handle.clone(),
+                        handle.clone(),
+                        handle.clone(),
+                        handle.clone(),
+                        handle.clone(),
+                        handle.clone(),
+                    ],
+                );
             }
             ClubeType::Grass => {
                 let handle: Handle<Image> = asset_server.load("textures/dirt.png");
@@ -34,41 +37,50 @@ pub fn load_textures(asset_server: Res<AssetServer>, mut loading: ResMut<ClubeHa
                 // loading.push(handle.clone_untyped());
                 // loading.push(top_handle.clone_untyped());
                 // loading.push(side_handle.clone_untyped());
-                [
-                    side_handle.clone(),
-                    side_handle.clone(),
-                    handle.clone(),
-                    top_handle.clone(),
-                    side_handle.clone(),
-                    side_handle.clone(),
-                ]
+                texture_array.insert(
+                    name.to_string(),
+                    [
+                        side_handle.clone(),
+                        side_handle.clone(),
+                        handle.clone(),
+                        top_handle.clone(),
+                        side_handle.clone(),
+                        side_handle.clone(),
+                    ],
+                );
             }
             ClubeType::Stone => {
                 let handle: Handle<Image> = asset_server.load("textures/stone.png");
                 // loading.push(handle.clone_untyped());
-                [
-                    handle.clone(),
-                    handle.clone(),
-                    handle.clone(),
-                    handle.clone(),
-                    handle.clone(),
-                    handle.clone(),
-                ]
+                texture_array.insert(
+                    name.to_string(),
+                    [
+                        handle.clone(),
+                        handle.clone(),
+                        handle.clone(),
+                        handle.clone(),
+                        handle.clone(),
+                        handle.clone(),
+                    ],
+                );
             }
             ClubeType::Wood => {
                 let handle: Handle<Image> = asset_server.load("textures/wood.png");
                 // loading.push(handle.clone_untyped());
-                [
-                    handle.clone(),
-                    handle.clone(),
-                    handle.clone(),
-                    handle.clone(),
-                    handle.clone(),
-                    handle.clone(),
-                ]
+                texture_array.insert(
+                    name.to_string(),
+                    [
+                        handle.clone(),
+                        handle.clone(),
+                        handle.clone(),
+                        handle.clone(),
+                        handle.clone(),
+                        handle.clone(),
+                    ],
+                );
             }
-        };
-        texture_array.insert(name.to_string(), textures);
+            _ => {}
+        }
     }
 
     **loading = texture_array;
