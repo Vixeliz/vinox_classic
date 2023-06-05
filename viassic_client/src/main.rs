@@ -225,12 +225,9 @@ pub fn game_setup(
     commands.spawn(MaterialMeshBundle {
         mesh: meshes.add(bevy_mesh),
         material: materials.add(PsxMaterial {
-            color: Color::WHITE,
-            fog_color: Color::WHITE,
-            snap_amount: 5.0,
-            fog_distance: Vec2::new(24.0, 128.0),
             color_texture: Some(clube_asset_registry.texture_atlas.texture.clone()),
-            alpha_mode: AlphaMode::Opaque,
+            fog_distance: Vec2::new(24.0, 128.0),
+            ..Default::default()
         }),
         transform: Transform::from_xyz(0.0, 0.0, 0.0),
         ..Default::default()
