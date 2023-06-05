@@ -6,8 +6,10 @@ default-run = "viassic_client"
 
 [dependencies]
 bevy.workspace=true
+bevy_psx = {git="https://github.com/vixeliz/bevy_psx_shader"}
 vinox_voxel.workspace = true
 viassic_common = {path = "../viassic_common"}
 bevy-inspector-egui = "0.18.3"
 ahash = "0.8.3"
-bevy_flycam = "0.10.1"
+bevy_fly_camera = "0.10.0"
+

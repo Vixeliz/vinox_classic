@@ -3,8 +3,11 @@ use bevy::asset::LoadState;
 use bevy::prelude::*;
 use bevy::render::mesh::Indices;
 use bevy::render::render_resource::PrimitiveTopology;
-use bevy_flycam::PlayerPlugin;
+use bevy::window::CursorGrabMode;
+use bevy::window::PrimaryWindow;
+use bevy_fly_camera::{FlyCamera, FlyCameraPlugin};
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
+use bevy_psx::{camera::PsxCamera, material::PsxMaterial, PsxPlugin};
 use viassic_common::blocks::blocks::Clube;
 use viassic_common::blocks::blocks::ClubeRegistry;
 use viassic_common::blocks::registry::load_textures;
@@ -27,14 +30,34 @@ fn main() {
     let mut app = App::new();
     app.add_state::<GameState>();
     app.add_plugins(DefaultPlugins.set(ImagePlugin::default_nearest()).build());
-    app.add_plugin(PlayerPlugin);
+    app.add_plugin(FlyCameraPlugin);
+    app.add_plugin(PsxPlugin);
     app.add_plugin(WorldInspectorPlugin::new());
     app.insert_resource(ClubeHandles::default());
     app.insert_resource(Msaa::Off);
     app.add_system(load_textures.in_schedule(OnEnter(GameState::Loading)));
     app.add_system(game_setup.in_schedule(OnEnter(GameState::Game)));
+    app.add_system(grab_mouse.in_set(OnUpdate(GameState::Game)));
     app.add_system(create_registry.in_set(OnUpdate(GameState::Loading)));
     app.run();
+}
+
+fn grab_mouse(
+    mut windows: Query<&mut Window, With<PrimaryWindow>>,
+    mouse: Res<Input<MouseButton>>,
+    key: Res<Input<KeyCode>>,
+) {
+    let mut window = windows.single_mut();
+
+    if mouse.just_pressed(MouseButton::Left) {
+        window.cursor.visible = false;
+        window.cursor.grab_mode = CursorGrabMode::Locked;
+    }
+
+    if key.just_pressed(KeyCode::Escape) {
+        window.cursor.visible = true;
+        window.cursor.grab_mode = CursorGrabMode::None;
+    }
 }
 
 pub fn create_registry(
@@ -68,9 +91,9 @@ pub fn game_setup(
     mut commands: Commands,
     clube_asset_registry: Res<ClubeAssetRegistry>,
     mut meshes: ResMut<Assets<Mesh>>,
-    mut materials: ResMut<Assets<StandardMaterial>>,
+    mut materials: ResMut<Assets<PsxMaterial>>,
 ) {
-    // commands.spawn(Camera3dBundle::default());
+    commands.spawn((PsxCamera::from_resolution(320, 240), FlyCamera::default()));
 
     let mut chunk = ChunkData::<Clube, ClubeRegistry>::default();
     chunk.set(
@@ -180,37 +203,34 @@ pub fn game_setup(
         &clube_asset_registry.texture_atlas,
         IVec3::new(0, 0, 0),
     );
-    // println!("{}", mesh.chunk_mesh.vertices.len());
+
     let mut bevy_mesh = Mesh::new(PrimitiveTopology::TriangleList);
     bevy_mesh.set_indices(Some(Indices::U32(mesh.chunk_mesh.indices)));
     bevy_mesh.insert_attribute(Mesh::ATTRIBUTE_POSITION, mesh.chunk_mesh.vertices.clone());
     bevy_mesh.insert_attribute(Mesh::ATTRIBUTE_NORMAL, mesh.chunk_mesh.normals);
 
-    if let Some(mesh_colors) = mesh.chunk_mesh.colors {
+    if let Some(mut mesh_colors) = mesh.chunk_mesh.colors {
+        for color in mesh_colors.iter_mut() {
+            color[0] *= 0.25;
+            color[1] *= 0.25;
+            color[2] *= 0.25;
+            color[3] *= 0.25;
+        }
         bevy_mesh.insert_attribute(Mesh::ATTRIBUTE_COLOR, mesh_colors);
     }
     if let Some(mesh_uvs) = mesh.chunk_mesh.uvs {
         bevy_mesh.insert_attribute(Mesh::ATTRIBUTE_UV_0, mesh_uvs);
     }
 
-    commands.insert_resource(AmbientLight {
-        color: Color::WHITE,
-        brightness: 0.2,
-    });
-
-    // commands.spawn(PointLightBundle {
-    //     point_light: PointLight::default(),
-    //     transform: Transform::from_xyz(8.0, 3.0, 8.0),
-    //     ..default()
-    // });
-
-    commands.spawn(PbrBundle {
+    commands.spawn(MaterialMeshBundle {
         mesh: meshes.add(bevy_mesh),
-        material: materials.add(StandardMaterial {
-            base_color: Color::WHITE,
-            base_color_texture: Some(clube_asset_registry.texture_atlas.texture.clone()),
-            perceptual_roughness: 1.0,
-            ..Default::default()
+        material: materials.add(PsxMaterial {
+            color: Color::WHITE,
+            fog_color: Color::WHITE,
+            snap_amount: 5.0,
+            fog_distance: Vec2::new(24.0, 128.0),
+            color_texture: Some(clube_asset_registry.texture_atlas.texture.clone()),
+            alpha_mode: AlphaMode::Opaque,
         }),
         transform: Transform::from_xyz(0.0, 0.0, 0.0),
         ..Default::default()

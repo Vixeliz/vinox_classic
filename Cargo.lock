@@ -112,9 +112,9 @@ dependencies = [
 
 [[package]]
 name = "aho-corasick"
-version = "1.0.1"
+version = "1.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "67fc08ce920c31afb70f013dcce1bfc3a3195de6a228474e45e1f145b36f8d04"
+checksum = "43f6cb1bf222025340178f382c426f13757b2960e89779dfcb319c32542a5a41"
 dependencies = [
  "memchr",
 ]
@@ -566,10 +566,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "bevy_flycam"
-version = "0.10.1"
+name = "bevy_fly_camera"
+version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b624150f4d28b8f03d924ed3d329d9765756c02c5652001b3c34f52b33fd235a"
+checksum = "b6217548790087c7b79675f87397ea90d27158edb4d533cc428170ca963db2a2"
 dependencies = [
  "bevy",
 ]
@@ -749,6 +749,14 @@ dependencies = [
  "bitflags",
  "bytemuck",
  "radsort",
+]
+
+[[package]]
+name = "bevy_psx"
+version = "0.1.0"
+source = "git+https://github.com/vixeliz/bevy_psx_shader#2d0ccd8c658303bcda32e17ff493b3da85df6a35"
+dependencies = [
+ "bevy",
 ]
 
 [[package]]
@@ -2301,9 +2309,9 @@ dependencies = [
 
 [[package]]
 name = "libc"
-version = "0.2.144"
+version = "0.2.145"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2b00cc1c228a6782d0f076e7b232802e0c5689d41bb5df366f2a6b6621cfdfe1"
+checksum = "fc86cde3ff845662b8f4ef6cb50ea0e20c524eb3d29ae048287e06a1b3fa6a81"
 
 [[package]]
 name = "libloading"
@@ -2741,9 +2749,9 @@ dependencies = [
 
 [[package]]
 name = "once_cell"
-version = "1.17.2"
+version = "1.18.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9670a07f94779e00908f3e686eab508878ebb390ba6e604d3a284c00e8d0487b"
+checksum = "dd8b5dd2ae5ed71462c540258bedcb51965123ad7e7ccf4b9a8cafaa4a63576d"
 
 [[package]]
 name = "orbclient"
@@ -3658,7 +3666,8 @@ dependencies = [
  "ahash 0.8.3",
  "bevy",
  "bevy-inspector-egui",
- "bevy_flycam",
+ "bevy_fly_camera",
+ "bevy_psx",
  "viassic_common",
  "vinox_voxel",
 ]
@@ -3681,7 +3690,7 @@ version = "0.1.0"
 [[package]]
 name = "vinox_voxel"
 version = "0.1.0"
-source = "git+https://github.com/vixeliz/vinox_voxel.git#bc4eaccc88057f4be8eb40e78727a74e5651502f"
+source = "git+https://github.com/vixeliz/vinox_voxel.git#f8d02f0aed541459766cd4515cf9d4728ccc8d93"
 dependencies = [
  "ahash 0.8.3",
  "bevy",
