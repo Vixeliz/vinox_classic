@@ -227,6 +227,7 @@ pub fn game_setup(
         material: materials.add(PsxMaterial {
             color_texture: Some(clube_asset_registry.texture_atlas.texture.clone()),
             fog_distance: Vec2::new(24.0, 128.0),
+            snap_amount: 16.0,
             ..Default::default()
         }),
         transform: Transform::from_xyz(0.0, 0.0, 0.0),
