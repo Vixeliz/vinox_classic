@@ -93,7 +93,10 @@ pub fn game_setup(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<PsxMaterial>>,
 ) {
-    commands.spawn((PsxCamera::from_resolution(320, 240), FlyCamera::default()));
+    commands.spawn((
+        PsxCamera::new(UVec2::new(320, 240), None, Color::WHITE, true, 48.0, 0),
+        FlyCamera::default(),
+    ));
 
     let mut chunk = ChunkData::<Clube, ClubeRegistry>::default();
     chunk.set(
@@ -119,31 +122,30 @@ pub fn game_setup(
                         // );
                         continue;
                     } else {
-                        if (x % 2) == 1 {
-                            if (z % 2) == 1 {
-                                chunk.set(
-                                    RelativeVoxelPos::new(x as u32, y + 1, z as u32),
-                                    Clube {
-                                        identifier:
-                                            viassic_common::blocks::blocks::ClubeType::Grass,
-                                        geometry: BlockGeometry::Block,
-                                        visibility: VoxelVisibility::Opaque,
-                                    },
-                                );
-                            }
-                        } else {
-                            if (z % 2) == 0 {
-                                chunk.set(
-                                    RelativeVoxelPos::new(x as u32, y + 1, z as u32),
-                                    Clube {
-                                        identifier:
-                                            viassic_common::blocks::blocks::ClubeType::Grass,
-                                        geometry: BlockGeometry::Block,
-                                        visibility: VoxelVisibility::Opaque,
-                                    },
-                                );
-                            }
-                        }
+                        // if (x % 2) == 1 {
+                        // if (z % 2) == 1 {
+                        chunk.set(
+                            RelativeVoxelPos::new(x as u32, y + 1, z as u32),
+                            Clube {
+                                identifier: viassic_common::blocks::blocks::ClubeType::Grass,
+                                geometry: BlockGeometry::Block,
+                                visibility: VoxelVisibility::Opaque,
+                            },
+                        );
+                        // }
+                        // } else {
+                        //     if (z % 2) == 0 {
+                        //         chunk.set(
+                        //             RelativeVoxelPos::new(x as u32, y + 1, z as u32),
+                        //             Clube {
+                        //                 identifier:
+                        //                     viassic_common::blocks::blocks::ClubeType::Grass,
+                        //                 geometry: BlockGeometry::Block,
+                        //                 visibility: VoxelVisibility::Opaque,
+                        //             },
+                        //         );
+                        //     }
+                        // }
                         continue;
                     }
                 }
